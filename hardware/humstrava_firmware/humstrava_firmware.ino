@@ -27,8 +27,7 @@ const char* WIFI_SSID = "DIGIFIBRA-cVr7";
 const char* WIFI_PASS = "EpDMqFbguKa9";
 
 // При локальном тестировании укажи IP ноутбука в LAN, например http://192.168.1.42:8000
-// При деплое на Railway — https://humstrava.up.railway.app
-const char* API_BASE  = "http://192.168.1.129:8000";
+const char* API_BASE  = "https://api.hamstrava.app";
 
 const char* API_KEY   = "19296e0a6dfe626bea4137a5ff37fac8";
 const char* DEVICE_ID = "hamster-wheel";
