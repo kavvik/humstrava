@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Humstrava · последние 24 ч</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<style>
+body { margin:0; background:#0a0a0a; color:#ededed; font-family:-apple-system,system-ui,sans-serif; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 32px 16px; }
+h1 { margin:0 0 4px; font-size: 24px; }
+h1 .o { color:#f97316; }
+.sub { color:#737373; font-size: 13px; margin-bottom: 24px; }
+.stats { display:grid; grid-template-columns: repeat(4,1fr); gap:12px; margin-bottom:24px; }
+.card { background:#171717; border:1px solid #262626; border-radius:16px; padding:16px; }
+.label { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#737373; margin-bottom:6px; }
+.val { font-size:24px; font-weight:800; font-variant-numeric: tabular-nums; }
+.unit { font-size:14px; color:#737373; margin-left:4px; }
+.chart-card { background:#171717; border:1px solid #262626; border-radius:16px; padding:20px; }
+canvas { background:transparent; }
+.foot { text-align:center; color:#525252; font-size:11px; margin-top:16px; }
+@media (max-width:640px) { .stats { grid-template-columns: repeat(2,1fr); } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🐹 <span class="o">Humstrava</span> · последние 24 часа</h1>
+  <div class="sub">Снимок на 04.06.2026 10:21 CEST</div>
+
+  <div class="stats">
+    <div class="card"><div class="label">Тиков</div><div class="val">8378</div></div>
+    <div class="card"><div class="label">Дистанция</div><div class="val">5.53<span class="unit">км</span></div></div>
+    <div class="card"><div class="label">Пик за 15 мин</div><div class="val">770<span class="unit">м</span></div></div>
+    <div class="card"><div class="label">Активных корзин</div><div class="val">19<span class="unit">/96</span></div></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="label">Дистанция по 15-мин интервалам, м</div>
+    <canvas id="c" height="260"></canvas>
+  </div>
+
+  <div class="foot">Корзины: 15 мин · окно: 24 ч · колесо: π × 21 см = 0.6597 м/тик · время локальное</div>
+</div>
+
+<script>
+const labels = ["10:21", "10:36", "10:51", "11:06", "11:21", "11:36", "11:51", "12:06", "12:21", "12:36", "12:51", "13:06", "13:21", "13:36", "13:51", "14:06", "14:21", "14:36", "14:51", "15:06", "15:21", "15:36", "15:51", "16:06", "16:21", "16:36", "16:51", "17:06", "17:21", "17:36", "17:51", "18:06", "18:21", "18:36", "18:51", "19:06", "19:21", "19:36", "19:51", "20:06", "20:21", "20:36", "20:51", "21:06", "21:21", "21:36", "21:51", "22:06", "22:21", "22:36", "22:51", "23:06", "23:21", "23:36", "23:51", "00:06", "00:21", "00:36", "00:51", "01:06", "01:21", "01:36", "01:51", "02:06", "02:21", "02:36", "02:51", "03:06", "03:21", "03:36", "03:51", "04:06", "04:21", "04:36", "04:51", "05:06", "05:21", "05:36", "05:51", "06:06", "06:21", "06:36", "06:51", "07:06", "07:21", "07:36", "07:51", "08:06", "08:21", "08:36", "08:51", "09:06", "09:21", "09:36", "09:51", "10:06"];
+const data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 11.9, 23.7, 9.2, 0.7, 5.3, 4.0, 2.6, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 16.5, 456.5, 770.5, 500.7, 599.7, 432.1, 688.7, 18.5, 620.1, 454.5, 637.3, 274.4, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
+new Chart(document.getElementById('c'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [{
+      data,
+      backgroundColor: '#f97316',
+      borderRadius: 2,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: { label: ctx => ctx.parsed.y + ' м' }
+      }
+    },
+    scales: {
+      x: {
+        ticks: { color: '#737373', maxTicksLimit: 12, autoSkip: true },
+        grid: { display: false }
+      },
+      y: {
+        ticks: { color: '#737373' },
+        grid: { color: '#262626' }
+      }
+    }
+  }
+});
+</script>
+</body>
+</html>
