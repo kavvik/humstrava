@@ -29,7 +29,7 @@ const char* WIFI_PASS = "";
 // При локальном тестировании укажи IP ноутбука в LAN, например http://192.168.1.42:8000
 const char* API_BASE  = "https://api.hamstrava.app";
 
-const char* API_KEY   = "19296e0a6dfe626bea4137a5ff37fac8";
+const char* API_KEY   = "";
 const char* DEVICE_ID = "hamster-wheel";
 
 const int  REED_PIN = 4;
