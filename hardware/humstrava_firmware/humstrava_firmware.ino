@@ -23,8 +23,8 @@
 
 // ================== НАСТРОЙКИ ==================
 
-const char* WIFI_SSID = "DIGIFIBRA-cVr7";
-const char* WIFI_PASS = "EpDMqFbguKa9";
+const char* WIFI_SSID = "-cVr7";
+const char* WIFI_PASS = "";
 
 // При локальном тестировании укажи IP ноутбука в LAN, например http://192.168.1.42:8000
 const char* API_BASE  = "https://api.hamstrava.app";
